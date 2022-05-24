@@ -1,7 +1,10 @@
 package com.example.employeepayrollapp.dto;
 
 
+import lombok.Data;
+
 import java.time.LocalDate;
+@Data
 public class EmployeePayrolDTO {
     private String fName;
     private String lName;
