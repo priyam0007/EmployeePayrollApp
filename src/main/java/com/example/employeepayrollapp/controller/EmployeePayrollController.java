@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,7 @@ public class EmployeePayrollController {
         return  new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@RequestBody EmployeePayrolDTO employeePayrolDTO){
+    public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrolDTO employeePayrolDTO){
         EmployeePayrolData employeePayrolData=iEmployeeService.createEmployeePayrollData(employeePayrolDTO);
         ResponseDTO responseDTO=new ResponseDTO("created employee payroll succesfully",employeePayrolData);
         return  new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
