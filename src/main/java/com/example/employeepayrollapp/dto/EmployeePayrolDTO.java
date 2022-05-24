@@ -1,5 +1,6 @@
 package com.example.employeepayrollapp.dto;
 
+
 import java.time.LocalDate;
 public class EmployeePayrolDTO {
     private String fName;
@@ -67,4 +68,3 @@ public class EmployeePayrolDTO {
                 '}';
     }
 }
-
