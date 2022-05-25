@@ -1,7 +1,5 @@
 package com.example.employeepayrollapp.dto;
 
-
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -30,3 +28,4 @@ public class EmployeePayrolDTO {
     @NotNull(message = "department should not be empty")
     public List<String> department;
 }
+

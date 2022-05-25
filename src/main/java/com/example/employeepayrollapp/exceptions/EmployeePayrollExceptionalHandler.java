@@ -1,6 +1,5 @@
 package com.example.employeepayrollapp.exceptions;
 
-
 import com.example.employeepayrollapp.dto.ResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -43,3 +42,4 @@ public class EmployeePayrollExceptionalHandler {
         return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.BAD_REQUEST);
     }
 }
+

@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/web")
+@RequestMapping("/employeepayroll")
 public class EmployeePayrollController {
     @Autowired
     private IEmployeeService iEmployeeService;
@@ -31,7 +31,14 @@ public class EmployeePayrollController {
         ResponseDTO responseDTO=new ResponseDTO("Get call for ID Success",employeePayrolData);
         return  new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
     }
-    @PostMapping("/create")
+
+    @GetMapping("/department/{department}")
+    public ResponseEntity<ResponseDTO> getEmployeePayrollData(@PathVariable String department){
+        List<EmployeePayrolData> employeePayrolData=iEmployeeService.getEmployeesByDepartment(department);
+        ResponseDTO responseDTO=new ResponseDTO("Get call for employee dapartment Success",employeePayrolData);
+        return  new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+    @PostMapping(value = "/create")
     public ResponseEntity<ResponseDTO> addEmployeePayrollData(@Valid @RequestBody EmployeePayrolDTO employeePayrolDTO){
         EmployeePayrolData employeePayrolData=iEmployeeService.createEmployeePayrollData(employeePayrolDTO);
         ResponseDTO responseDTO=new ResponseDTO("created employee payroll succesfully",employeePayrolData);
@@ -53,3 +60,4 @@ public class EmployeePayrollController {
     }
 
 }
+
