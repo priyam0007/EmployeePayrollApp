@@ -2,6 +2,7 @@ package com.example.employeepayrollapp.service;
 
 import com.example.employeepayrollapp.dto.EmployeePayrolDTO;
 import com.example.employeepayrollapp.model.EmployeePayrolData;
+import com.example.employeepayrollapp.exceptions.EmployeePayrollException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ public class EmployeePayrollService implements IEmployeeService {
 
     @Override
     public EmployeePayrolData getEmployeePayrollDataById(int id) {
-        return employeePayrolDataList.get(id-1);
+        return employeePayrolDataList.stream().filter(employeePayrolData -> employeePayrolData.getId() == id)
+                .findFirst().orElseThrow(()-> new EmployeePayrollException("Exception Not Found"));
     }
 
     @Override
@@ -29,11 +31,13 @@ public class EmployeePayrollService implements IEmployeeService {
 
     public EmployeePayrolData updateEmployeePayrollData(int id, EmployeePayrolDTO employeePayrolDTO) {
         EmployeePayrolData employeePayrolData=this.getEmployeePayrollDataById(id);
-        employeePayrolData.setFName(employeePayrolDTO.getfName());
-        employeePayrolData.setLName(employeePayrolDTO.getlName());
-        employeePayrolData.setCompany(employeePayrolDTO.getCompany());
-        employeePayrolData.setRoll(employeePayrolDTO.getRoll());
+        employeePayrolData.setFName(employeePayrolDTO.getFName());
         employeePayrolData.setSalary(employeePayrolDTO.getSalary());
+        employeePayrolData.setGender(employeePayrolDTO.getGender());
+        employeePayrolData.setStartDate(employeePayrolDTO.getStartDate());
+        employeePayrolData.setNote(employeePayrolDTO.getNote());
+        employeePayrolData.setProfilePic(employeePayrolDTO.getProfilePic());
+        employeePayrolData.setDepartment(employeePayrolDTO.getDepartment());
         employeePayrolDataList.set(id-1,employeePayrolData);
         return employeePayrolData;
     }
