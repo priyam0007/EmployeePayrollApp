@@ -14,11 +14,11 @@ import java.util.List;
 
 @Data
 public class EmployeePayrolDTO {
-    @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$", message = "Employee firstname pattern is wrong")
+    @Pattern(regexp = "^[A-Z]{1}[a-zA-Z\\s]{2,}$",message ="Employee firstname pattern is wrong")
     public String fName;
     @Min(value = 500, message = "Min salary should be more than 500")
     public int salary;
-    @Pattern(regexp = "male|female", message = "Gender needs to be  male or female")
+    @Pattern(regexp = "male|female",message = "Gender needs to be  male or female")
     public String gender;
     @JsonFormat(pattern = "dd MMM yyyy")
     @NotNull(message = "startdate should not be empty")
