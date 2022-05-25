@@ -13,45 +13,38 @@ import java.util.List;
 @Service
 @Slf4j
 public class EmployeePayrollService implements IEmployeeService {
-
     @Autowired
     private EmployeePayrollRepository employeePayrollRepository;
 
-    private List<EmployeePayrolData> employeePayrolDataList=new ArrayList<>();
+    private List<EmployeePayrolData> employeePayrolDataList = new ArrayList<>();
+
     @Override
     public List<EmployeePayrolData> getEmployeePayrollData() {
-        return employeePayrolDataList;
+        return employeePayrollRepository.findAll();
     }
 
     @Override
     public EmployeePayrolData getEmployeePayrollDataById(int id) {
-        return employeePayrolDataList.stream().filter(employeePayrolData -> employeePayrolData.getId() == id)
-                .findFirst().orElseThrow(()-> new EmployeePayrollException("Exception Not Found"));
+        return employeePayrollRepository.findById(id).orElseThrow(() -> new EmployeePayrollException("Employee with id" + id + "does not exist..!!"));
     }
 
     @Override
     public EmployeePayrolData createEmployeePayrollData(EmployeePayrolDTO employeePayrolDTO) {
-        EmployeePayrolData employeePayrolData=new EmployeePayrolData(employeePayrolDTO);
-        log.debug("empData"+employeePayrolData.toString());
+        EmployeePayrolData employeePayrolData = new EmployeePayrolData(employeePayrolDTO);
+        log.debug("empData" + employeePayrolData.toString());
         employeePayrolDataList.add(employeePayrolData);
         return employeePayrollRepository.save(employeePayrolData);
     }
 
     public EmployeePayrolData updateEmployeePayrollData(int id, EmployeePayrolDTO employeePayrolDTO) {
-        EmployeePayrolData employeePayrolData=this.getEmployeePayrollDataById(id);
-        employeePayrolData.setFName(employeePayrolDTO.getFName());
-        employeePayrolData.setSalary(employeePayrolDTO.getSalary());
-        employeePayrolData.setGender(employeePayrolDTO.getGender());
-        employeePayrolData.setStartDate(employeePayrolDTO.getStartDate());
-        employeePayrolData.setNote(employeePayrolDTO.getNote());
-        employeePayrolData.setProfilePic(employeePayrolDTO.getProfilePic());
-        employeePayrolData.setDepartment(employeePayrolDTO.getDepartment());
-        employeePayrolDataList.set(id-1,employeePayrolData);
-        return employeePayrolData;
+        EmployeePayrolData employeePayrolData = this.getEmployeePayrollDataById(id);
+        employeePayrolData.updateEmployeePayrolData(employeePayrolDTO);
+        return employeePayrollRepository.save(employeePayrolData);
     }
 
     @Override
     public void deleteEmployeePayrollData(int id) {
-        employeePayrolDataList.remove(id-1);
+        EmployeePayrolData employeePayrolData = this.getEmployeePayrollDataById(id);
+        employeePayrollRepository.delete(employeePayrolData);
     }
 }
